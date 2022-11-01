@@ -13,6 +13,7 @@ import Home from './src/Component/Home';
 import Rotate from './src/Component/Rotate'
 import FunctionalAssignment from './src/Component/FunctionalAssignment';
 import RotateTwo from './src/Component/RotateTwo';
+import NetworkAssign  from './src/Component/NetworkAssign';
 const Stack = createNativeStackNavigator();
 
 
@@ -24,6 +25,7 @@ const Stack = createNativeStackNavigator();
       <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="network" component={NetworkAssign} />
         <Stack.Screen name="Animation1" component={Rotate} />
         <Stack.Screen name="Animation2" component={RotateTwo} />
         <Stack.Screen name="functionA" component={FunctionalAssignment} />

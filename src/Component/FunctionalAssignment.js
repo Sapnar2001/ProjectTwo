@@ -1,5 +1,5 @@
 import {SafeAreaView, Text, FlatList, Image, View,TextInput, TouchableOpacity, StyleSheet} from 'react-native';
-import React,{useRef,useState} from 'react';
+import React,{useRef,useState, useCallback} from 'react';
 import BackButton from './BackButton';
 import InputB from './InputB';
 
@@ -168,57 +168,75 @@ const DATA = [
 
 const FunctionalAssignment = () => {
 const [text,setText]=useState('');
-  var flatref=useRef(null).current;
+const [buton,setButon]=useState(false);
+
+// const [ref, setRef] = useState(null);
+
+  let flatref=useRef(null).current;
   // const buttonHandler=()=>{
-  //   this.flatref.scrollToOffset({ animated: true, offset: 0 });
+  //   this.flatref.scrollToOffset({0, true });
   // }
+  console.log(text);
+  const GoTo=()=>{
+    const id = DATA.findIndex((item) => item.id === text);
+    flatref.scrollToIndex({
+      index:id,
+      animated: false
+     });
+     setText('')
+  }
+  const chngeValue=()=>{
+setButon(true)
+  }
+  const BackToGo=()=>{
+    flatref.scrollToOffset({
+      offset:20,
+      animated:true
+
+    })
+    setButon(false)
+  }
+  const onScrollEvent = ({contentOffset}) => {
+    console.log(contentOffset.y);
+    return contentOffset.y <= 10487
+  };
+
+  const _getItemLayout = useCallback((_, index) => ({
+    length: 270,
+    offset: 270 * index,
+    index,
+  }));
+
   return (
     <SafeAreaView style={{flex:1}}>
-    <View style={{flexDirection:'row',  justifyContent:'space-around'}}>
-       <View style={{padding: 10 , margin:20}}>
-      <TextInput
-        style={styles.InputBox}
-        value={text}
-        placeholder="Type a Id"
-        onChangeText={(text)=>{
-          setText(text)
-        }}
-      />
-    </View>
-    <View>
-    <TouchableOpacity style={styles.button1}>
-                    <Text style={styles.buttonText1} onPress={()=>alert(text)}>Go</Text>
-                </TouchableOpacity>
-    </View>
-    </View>
+    <InputB text = {text} setText = {setText} goToFunction = {GoTo} />
       <FlatList
-      ref={(reff)=>{
-        flatref=reff
-        alert
+     onEndReached={chngeValue}
+      ref={(ref) => {
+        flatref = ref;
       }}
-        style={{flex: 1,backgroundColor:'grey'}}
+        style={styles.flatView}
+        getItemLayout = {_getItemLayout}
         data={DATA} 
         keyExtractor = {(item, index) => `${index + item.id}`}
+        onScroll={({nativeEvent}) => {
+          if(onScrollEvent(nativeEvent)){
+            setButon(false)
+          }
+        }}
         renderItem={({item, index}) => {
           return (
-            <View key={index} style={{backgroundColor: '#529FF3', margin: 10, justifyContent:'center'}}>
+            <View key={index} style={styles.mainView}>
               <View>
                 <Text
-                  style={{
-                    paddingVertical: 10,
-                    fontSize: 15,
-                    paddingStart: 5,
-                    paddingEnd: 16,
-                    color: 'black',
-                    textAlign:'center'
-                  }}>
+                  style={styles.mainText}>
                   {item.id}
                 </Text>
               </View>
               <View>
                <Image
                   source={{uri: item.imageUrl}}
-                  style={{height: 200, width: 200, alignSelf:'center', margin:10,}}
+                  style={styles.mainImage}
                 />
               </View>
             </View>
@@ -226,9 +244,8 @@ const [text,setText]=useState('');
         }}
         
       />
-        <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Back to top</Text>
-                </TouchableOpacity>
+    {buton   &&(<BackButton BackToFunction={BackToGo}/>)}
+                
     </SafeAreaView>
     
   );
@@ -239,7 +256,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginTop: 50,
     marginLeft: 20,
-    //    marginHorizontal:10,
+   
   },
   buttonText: {
     fontSize: 18,
@@ -247,19 +264,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 15,
   },
-  InputBox:{
-    // borderRadius: 5,
-    // width: 300,
-    // padding:30,
-    borderWidth: 5,
-    borderColor:'black',
-    width: "100%",
-    borderWidth: 1,
-    height:30,
-    width:200,
-    textAlign:'center',
-    // margin:40,
-},
     button1: {
       backgroundColor: 'rgb(90,128,236)',
       marginTop:30,
@@ -272,6 +276,24 @@ const styles = StyleSheet.create({
       color: "#fff",
       textAlign: "center",
       marginTop:6,
+    },
+    mainText:
+    {
+      paddingVertical: 10,
+      fontSize: 15,
+      paddingStart: 5,
+      paddingEnd: 16,
+      color: 'black',
+      textAlign:'center'
+    },
+    mainImage:{
+      height: 200, width: 200, alignSelf:'center', margin:10,
+    },
+    mainView:{
+      backgroundColor: '#529FF3', margin: 10, justifyContent:'center'
+    },
+    flatView:{
+      flex: 1,backgroundColor:'grey'
     }
   });
 

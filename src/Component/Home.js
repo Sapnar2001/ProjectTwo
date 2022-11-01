@@ -10,8 +10,11 @@ export default class Home extends React.Component {
               <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Animation2')} navigation={this.props.navigation} >
                   <Text style={styles.buttonText}>ANIMATION_ASSIGNMENT2</Text>
               </TouchableOpacity>
-              {/* <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('functionA')} navigation={this.props.navigation} >
-                  <Text style={styles.buttonText}>functional-Assignment</Text>
+              <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('functionA')} navigation={this.props.navigation} >
+                  <Text style={styles.buttonText}>REACT_HOOKS</Text>
+              </TouchableOpacity>
+              {/* <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('network')} navigation={this.props.navigation} >
+                  <Text style={styles.buttonText}>PERSISTANCE NETWORK CALLS</Text>
               </TouchableOpacity> */}
               </View>
               )

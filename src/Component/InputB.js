@@ -2,17 +2,19 @@ import { View, Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
 import React from 'react'
 import BackButton from './BackButton'
 
-const InputB = () => {
+const InputB = (props) => {
   return (
     <View style={{flexDirection:'row',  justifyContent:'space-around'}}>
        <View style={{padding: 10 , margin:20}}>
       <TextInput
         style={styles.InputBox}
         placeholder="Type a Id"
+        onChangeText= {(text) => props.setText(parseInt(text))}
+        value=  {props.text}
       />
     </View>
     <View>
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} onPress={props.goToFunction} >
                     <Text style={styles.buttonText}>Go</Text>
                 </TouchableOpacity>
     </View>
@@ -49,3 +51,20 @@ const styles = StyleSheet.create({
 })
 
 export default InputB
+{/* <View style={{flexDirection:'row',  justifyContent:'space-around'}}>
+       <View style={{padding: 10 , margin:20}}>
+      <TextInput
+        style={styles.InputBox}
+        value={text}
+        placeholder="Type a Id"
+        onChangeText={(text)=>{
+          setText(text)
+        }}
+      />
+    </View>
+    <View>
+    <TouchableOpacity style={styles.button1}  onPress={GoTo}>
+                    <Text style={styles.buttonText1}>Go</Text>
+                </TouchableOpacity>
+    </View>
+    </View> */}
