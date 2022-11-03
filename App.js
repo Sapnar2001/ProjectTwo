@@ -14,17 +14,26 @@ import Rotate from './src/Component/Rotate'
 import FunctionalAssignment from './src/Component/FunctionalAssignment';
 import RotateTwo from './src/Component/RotateTwo';
 import NetworkAssign  from './src/Component/NetworkAssign';
+import HomeScreen from './src/Component/HomeScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createNativeStackNavigator();
 
 
 
   export default class App extends React.Component{
+    constructor(props) {
+      super(props);
+      this.state = {value : false};
+    }
     render(){
+
+     
   return (
     
       <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="networkPart" component={HomeScreen} />
         <Stack.Screen name="network" component={NetworkAssign} />
         <Stack.Screen name="Animation1" component={Rotate} />
         <Stack.Screen name="Animation2" component={RotateTwo} />
@@ -34,4 +43,4 @@ const Stack = createNativeStackNavigator();
     
   );
 }
-  }
+    }

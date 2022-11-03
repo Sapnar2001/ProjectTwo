@@ -1,5 +1,6 @@
 import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Button } from 'react-native'
 import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class Home extends React.Component {
   render() {
       return (
@@ -13,9 +14,17 @@ export default class Home extends React.Component {
               <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('functionA')} navigation={this.props.navigation} >
                   <Text style={styles.buttonText}>REACT_HOOKS</Text>
               </TouchableOpacity>
-              {/* <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('network')} navigation={this.props.navigation} >
+              <TouchableOpacity style={styles.button} onPress={() =>{
+                AsyncStorage.getItem('user').then((data) => {
+                    if(data){
+                        this.props.navigation.navigate('networkPart')
+                    }else{
+                        this.props.navigation.navigate('network')
+                    }
+                }).catch(() => {})
+              }} navigation={this.props.navigation} >
                   <Text style={styles.buttonText}>PERSISTANCE NETWORK CALLS</Text>
-              </TouchableOpacity> */}
+              </TouchableOpacity>
               </View>
               )
       }}
